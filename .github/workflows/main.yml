@@ -23,4 +23,4 @@ jobs:  # 작업 정의
 
       - name: Create .env file  # .env 파일 생성
         run: |
-          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_API_KEY=${{ secrets.API_KEY }}" >> .env
