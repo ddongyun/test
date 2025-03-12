@@ -1,3 +1,26 @@
-- name: Create .env file
-      run: |
-        echo API_KEY=${{ secrets.API_KEY }} >> .env
+name: Deploy to Hosting  # 워크플로우 이름
+
+on:  # 언제 실행할지
+  push:  # main 브랜치에 푸시할 때 실행
+    branches:
+      - main
+
+jobs:  # 작업 정의
+  build-and-deploy:  # 작업 이름
+    runs-on: ubuntu-latest  # 실행 환경 (Ubuntu 최신 버전)
+
+    steps:  # 실행 단계
+      - name: Checkout code  # 리포지토리 코드 가져오기
+        uses: actions/checkout@v4  # 공식 액션 사용
+
+      - name: Setup Node.js  # Node.js 환경 설정
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'  # Node.js 버전 (필요한 버전으로 변경 가능)
+
+      - name: Install dependencies  # 의존성 설치
+        run: npm install  # npm 사용 (yarn이면 yarn install로 변경)
+
+      - name: Create .env file  # .env 파일 생성
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
