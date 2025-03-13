@@ -1,28 +1,14 @@
-name: Deploy to Hosting  # 워크플로우 이름
-
-on:  # 언제 실행할지
-  push:  # main 브랜치에 푸시할 때 실행
+name: Deploy the main branch
+on:
+  push:
     branches:
       - main
-
-jobs:  # 작업 정의
-  build-and-deploy:  # 작업 이름
-    runs-on: ubuntu-latest  # 실행 환경 (Ubuntu 최신 버전)
-
-    steps:  # 실행 단계
-      - name: Checkout code  # 리포지토리 코드 가져오기
-        uses: actions/checkout@v4  # 공식 액션 사용
-
-      - name: Setup Node.js  # Node.js 환경 설정
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'  # Node.js 버전
-
-      - name: Install dependencies  # 의존성 설치
-        run: npm install  # npm으로 패키지 설치
-
-      - name: Access to secrets and create .env  # 시크릿 값으로 .env 파일 생성
-        run: |
-          echo "NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY" >> .env
-        env:
-          NEXT_PUBLIC_API_KEY: ${{ secrets.API_KEY }}  # GitHub Secrets에서 API_KEY 가져오기
+jobs:
+  main:
+    name: Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: lowply/deploy-firebase@v0.0.5
+      env:
+        NEXT_PUBLIC_API_KEY: ${{ secrets.API_KEY }}
