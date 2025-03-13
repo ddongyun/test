@@ -24,6 +24,5 @@ jobs:  # 작업 정의
       - name: Access to secrets and create .env  # 시크릿 값으로 .env 파일 생성
         run: |
           echo "NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY" >> .env
-          echo "NEXT_PUBLIC_API_KEY is set to: $NEXT_PUBLIC_API_KEY"
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.API_KEY }}  # GitHub Secrets에서 API_KEY 가져오기
