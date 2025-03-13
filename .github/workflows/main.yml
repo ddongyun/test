@@ -16,11 +16,13 @@ jobs:  # 작업 정의
       - name: Setup Node.js  # Node.js 환경 설정
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Node.js 버전 (필요한 버전으로 변경 가능)
+          node-version: '18'  # Node.js 버전
 
       - name: Install dependencies  # 의존성 설치
-        run: npm install  # npm 사용 (yarn이면 yarn install로 변경)
+        run: npm install  # npm으로 패키지 설치
 
-      - name: Create .env file  # .env 파일 생성
+      - name: Access to secrets and create .env  # 시크릿 값으로 .env 파일 생성
         run: |
-          echo "NEXT_PUBLIC_API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_API_KEY=$NEXT_PUBLIC_API_KEY" >> .env
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.API_KEY }}  # GitHub Secrets에서 API_KEY 가져오기
